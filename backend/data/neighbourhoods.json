@@ -1,0 +1,202 @@
+{
+  "Bangalore/Whitefield": {
+    "school_score": 8.5,
+    "safety_score": 8.0,
+    "metro_km": 1.2,
+    "amenity_summary": "IT parks, malls (Phoenix Marketcity), hospitals (Columbia Asia), international schools",
+    "schools": ["Inventure Academy (8.5)", "Vydehi School (8.0)", "DPS East (8.2)"],
+    "highlights": ["Major IT hub", "Purple Line metro access", "Good connectivity to ORR"]
+  },
+  "Bangalore/Varthur": {
+    "school_score": 7.8,
+    "safety_score": 7.5,
+    "metro_km": 2.5,
+    "amenity_summary": "Growing residential hub, Varthur Lake nearby, local markets",
+    "schools": ["Gear International (7.8)", "Delhi Public School Varthur (7.5)"],
+    "highlights": ["Affordable compared to Whitefield", "Improving infrastructure"]
+  },
+  "Bangalore/Panathur": {
+    "school_score": 7.5,
+    "safety_score": 7.8,
+    "metro_km": 3.0,
+    "amenity_summary": "Residential area between Sarjapur and ORR, tech parks nearby",
+    "schools": ["Harvest International (7.5)", "Oakridge Panathur (8.0)"],
+    "highlights": ["Good value for money", "Near Sarjapur IT corridor"]
+  },
+  "Bangalore/Marathahalli": {
+    "school_score": 8.0,
+    "safety_score": 7.5,
+    "metro_km": 1.8,
+    "amenity_summary": "Central ORR location, malls, restaurants, tech offices",
+    "schools": ["New Horizon Gurukul (8.0)", "Ryan International (7.8)"],
+    "highlights": ["Excellent ORR connectivity", "High rental demand"]
+  },
+  "Bangalore/Indiranagar": {
+    "school_score": 9.0,
+    "safety_score": 8.5,
+    "metro_km": 0.5,
+    "amenity_summary": "Premium central locality, cafes, boutiques, metro, hospitals",
+    "schools": ["Bishop Cottons (9.0)", "National Public School (9.2)"],
+    "highlights": ["Prime central location", "Best social infrastructure"]
+  },
+  "Bangalore/Electronic City": {
+    "school_score": 7.5,
+    "safety_score": 8.0,
+    "metro_km": 4.0,
+    "amenity_summary": "Major IT hub, Infosys/Wipro campuses, hospitals, schools",
+    "schools": ["Treamis World School (7.8)", "Delhi Public School EC (7.5)"],
+    "highlights": ["Walk-to-work for IT employees", "Established township"]
+  },
+  "Bangalore/Sarjapur Road": {
+    "school_score": 8.2,
+    "safety_score": 8.0,
+    "metro_km": 5.0,
+    "amenity_summary": "Premium residential corridor, international schools, tech parks",
+    "schools": ["Inventure Academy Sarjapur (8.5)", "Harvest International (8.0)"],
+    "highlights": ["Top schools cluster", "Premium gated communities"]
+  },
+  "Bangalore/Hebbal": {
+    "school_score": 8.5,
+    "safety_score": 8.2,
+    "metro_km": 1.0,
+    "amenity_summary": "North Bangalore hub, Manyata Tech Park, lake, metro",
+    "schools": ["Vidya Niketan (8.5)", "Delhi Public School North (8.3)"],
+    "highlights": ["Manyata Tech Park proximity", "Green and well-planned"]
+  },
+  "Bangalore/Bellandur": {
+    "school_score": 8.0,
+    "safety_score": 7.5,
+    "metro_km": 2.0,
+    "amenity_summary": "ORR tech hub, Bellandur Lake, malls, restaurants",
+    "schools": ["Gear Innovative Intl (8.0)", "Primus Public School (7.8)"],
+    "highlights": ["Central ORR location", "High appreciation potential"]
+  },
+  "Bangalore/Kanakapura Road": {
+    "school_score": 7.8,
+    "safety_score": 8.0,
+    "metro_km": 1.5,
+    "amenity_summary": "Metro-connected corridor, townships, green spaces",
+    "schools": ["Delhi Public School South (8.0)", "JSS Public School (7.5)"],
+    "highlights": ["Metro Yellow Line", "Good value townships"]
+  },
+  "Bangalore/Bagalur": {
+    "school_score": 6.5,
+    "safety_score": 7.5,
+    "metro_km": 8.0,
+    "amenity_summary": "Affordable north Bangalore, near airport, developing area",
+    "schools": ["Ryan International Bagalur (6.5)", "Vibgyor High (7.0)"],
+    "highlights": ["Budget-friendly", "Near Kempegowda Airport"]
+  },
+  "Bangalore/Brookfield": {
+    "school_score": 8.0,
+    "safety_score": 8.0,
+    "metro_km": 2.5,
+    "amenity_summary": "Quiet residential, near ITPL and Whitefield",
+    "schools": ["Greenwood High (8.5)", "Deens Academy (7.8)"],
+    "highlights": ["Family-friendly", "Near ITPL"]
+  },
+  "Bangalore/Mahadevapura": {
+    "school_score": 7.8,
+    "safety_score": 7.8,
+    "metro_km": 1.5,
+    "amenity_summary": "ORR east, tech parks, growing retail",
+    "schools": ["Vibgyor High Marathahalli (8.0)", "Gear School (7.5)"],
+    "highlights": ["IT corridor access", "Metro connectivity improving"]
+  },
+  "Bangalore/Thanisandra": {
+    "school_score": 7.5,
+    "safety_score": 7.8,
+    "metro_km": 2.0,
+    "amenity_summary": "North Bangalore, near airport road, townships",
+    "schools": ["Delhi Public School North (8.0)", "Presidency School (7.5)"],
+    "highlights": ["Affordable north BLR", "Township developments"]
+  },
+  "Bangalore/Hennur": {
+    "school_score": 7.5,
+    "safety_score": 8.0,
+    "metro_km": 3.0,
+    "amenity_summary": "Residential north Bangalore, Hennur Lake, metro planned",
+    "schools": ["Legacy School (7.5)", "Vidyashilp Academy (8.0)"],
+    "highlights": ["Emerging area", "Good rental yields"]
+  },
+  "Mumbai/Thane West": {
+    "school_score": 8.0,
+    "safety_score": 8.0,
+    "metro_km": 0.8,
+    "amenity_summary": "Major suburb, Viviana Mall, hospitals, schools",
+    "schools": ["Smt. Sulochanadevi Singhania (8.5)", "Hiranandani Foundation (8.0)"],
+    "highlights": ["Metro Line 4", "Premium township options"]
+  },
+  "Mumbai/Dombivli": {
+    "school_score": 7.0,
+    "safety_score": 7.5,
+    "metro_km": 1.0,
+    "amenity_summary": "Affordable Mumbai suburb, metro connected",
+    "schools": ["St. Marys High School (7.0)", "Model English School (6.8)"],
+    "highlights": ["Budget-friendly Mumbai", "Central Line + Metro"]
+  },
+  "Mumbai/Panvel": {
+    "school_score": 6.8,
+    "safety_score": 7.5,
+    "metro_km": 2.0,
+    "amenity_summary": "Navi Mumbai extension, airport proximity, townships",
+    "schools": ["Ryan International Panvel (7.0)", "St. Josephs (6.5)"],
+    "highlights": ["Navi Mumbai growth corridor", "Affordable"]
+  },
+  "Mumbai/Malad West": {
+    "school_score": 8.5,
+    "safety_score": 8.0,
+    "metro_km": 0.5,
+    "amenity_summary": "Western suburbs premium, malls, metro, beaches nearby",
+    "schools": ["Bombay Scottish (9.0)", "Ryan International Malad (8.0)"],
+    "highlights": ["Premium western suburbs", "Excellent connectivity"]
+  },
+  "Pune/Hinjewadi": {
+    "school_score": 8.0,
+    "safety_score": 8.0,
+    "metro_km": 3.0,
+    "amenity_summary": "IT hub, Rajiv Gandhi Infotech Park, townships",
+    "schools": ["Indira National School (8.0)", "Vibgyor Hinjewadi (8.2)"],
+    "highlights": ["Major IT park", "Township living"]
+  },
+  "Pune/Mahalunge": {
+    "school_score": 7.5,
+    "safety_score": 7.8,
+    "metro_km": 4.0,
+    "amenity_summary": "Near Hinjewadi, affordable residential",
+    "schools": ["Wisdom High Intl (7.5)", "Podar Intl (7.8)"],
+    "highlights": ["Budget option near IT hub", "Growing area"]
+  },
+  "Pune/Keshav Nagar": {
+    "school_score": 8.5,
+    "safety_score": 8.5,
+    "metro_km": 1.0,
+    "amenity_summary": "Premium Kalyani Nagar area, riverfront, cafes",
+    "schools": ["The Bishop's School (9.0)", "Lexicon Intl (8.5)"],
+    "highlights": ["Premium Pune locality", "Riverfront living"]
+  },
+  "Hyderabad/Nallagandla": {
+    "school_score": 8.5,
+    "safety_score": 8.5,
+    "metro_km": 2.0,
+    "amenity_summary": "Gachibowli extension, lake, schools, IT proximity",
+    "schools": ["Oakridge Nallagandla (8.5)", "Delhi Public School (8.3)"],
+    "highlights": ["Near Financial District", "Family-friendly"]
+  },
+  "Hyderabad/Nanakramguda": {
+    "school_score": 8.0,
+    "safety_score": 8.5,
+    "metro_km": 1.5,
+    "amenity_summary": "Financial District, IT campuses, premium residential",
+    "schools": ["Chirec Intl (8.5)", "Delhi Public School (8.0)"],
+    "highlights": ["Financial District hub", "Premium gated communities"]
+  },
+  "Hyderabad/HITEC City": {
+    "school_score": 8.5,
+    "safety_score": 8.5,
+    "metro_km": 0.3,
+    "amenity_summary": "Hyderabad IT hub, metro, malls, hospitals",
+    "schools": ["Chirec Intl (8.5)", "Oakridge Gachibowli (9.0)"],
+    "highlights": ["Walk-to-work IT hub", "Best metro connectivity"]
+  }
+}
