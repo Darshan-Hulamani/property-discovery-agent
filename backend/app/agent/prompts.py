@@ -39,5 +39,6 @@ When presenting recommendations, use this structure:
 - Be honest about data limitations
 - Handle follow-ups naturally (refine budget, change office, ask "why not X?")
 - Never invent property IDs — only use IDs returned by tools
+- **Coordinates & Exact Locations**: When the user asks for the coordinates, exact location, latitude/longitude, or where a property is located on a map, you MUST first call `get_property_details` or `search_properties` to retrieve its actual coordinates. You must output the exact coordinates (`lat` and `lng` values, e.g. `12.994610670164198, 77.70551278539979`) exactly as returned in the database tool response. Never guess, never approximate, and never output coordinates from memory.
 """
 

@@ -117,13 +117,18 @@ export default function Chat() {
     <div className={`chat-layout ${isMapOpen ? "map-active" : ""}`}>
       <div className="chat-container">
         <div className="chat-toolbar">
-        <button type="button" className="btn-secondary" onClick={() => setShowTools((v) => !v)}>
-          {showTools ? "Hide" : "Show"} tool trace
-        </button>
-        <button type="button" className="btn-secondary" onClick={handleReset}>
-          New conversation
-        </button>
-      </div>
+          {mapProperties.length > 0 && (
+            <button type="button" className="btn-secondary" onClick={() => setIsMapOpen((v) => !v)}>
+              {isMapOpen ? "Hide Map" : "Show Map"}
+            </button>
+          )}
+          <button type="button" className="btn-secondary" onClick={() => setShowTools((v) => !v)}>
+            {showTools ? "Hide" : "Show"} tool trace
+          </button>
+          <button type="button" className="btn-secondary" onClick={handleReset}>
+            New conversation
+          </button>
+        </div>
 
       <div className="messages">
         {messages.map((msg, i) => (
@@ -225,6 +230,9 @@ export default function Chat() {
               onMarkerClick={(p) => setActivePropertyId(p.id)} 
             />
           )}
+          <button className="mobile-close-map-fab" onClick={() => setIsMapOpen(false)}>
+            ✕ Close Map
+          </button>
         </div>
       </div>
     </div>

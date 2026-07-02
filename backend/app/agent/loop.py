@@ -120,6 +120,10 @@ def run_agent(session_id: str, user_message: str) -> tuple[str, list[ToolTraceEn
                 for p in result["properties"]:
                     if p["id"] not in existing_ids:
                         properties_out.append(p)
+            elif name == "get_property_details" and isinstance(result, dict) and "error" not in result:
+                existing_ids = {p["id"] for p in properties_out}
+                if result.get("id") and result["id"] not in existing_ids:
+                    properties_out.append(result)
 
             function_response_parts.append(
                 types.Part(

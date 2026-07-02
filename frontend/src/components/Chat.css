@@ -419,4 +419,33 @@
     font-size: 0.9rem;
     border-radius: 8px;
   }
+
+  .mobile-close-map-fab {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    bottom: 24px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1010; /* Keep it above Leaflet controls which are z-index 1000 */
+    background-color: var(--accent-color);
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 30px;
+    font-weight: 600;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+    cursor: pointer;
+    font-size: 0.95rem;
+    transition: transform 0.2s ease, background-color 0.15s ease;
+  }
+
+  .mobile-close-map-fab:active {
+    transform: translate(-50%, 2px) scale(0.98);
+  }
+}
+
+.mobile-close-map-fab {
+  display: none;
 }
