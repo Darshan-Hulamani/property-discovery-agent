@@ -10,6 +10,8 @@ The system leverages **Google Gemini** as the reasoning engine, enabling the age
 
 **Application:** [Working Demo](https://property-discovery-agent.vercel.app/)
 
+**Assignment deliverables:** [DELIVERABLES.md](DELIVERABLES.md)
+
 ---
 
 ## 🏗️ System Architecture
