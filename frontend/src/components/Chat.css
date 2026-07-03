@@ -216,6 +216,35 @@
   font-weight: 850;
 }
 
+.message-body table {
+  display: block;
+  width: max-content;
+  min-width: 100%;
+  max-width: 100%;
+  overflow-x: auto;
+  border-collapse: collapse;
+  font-size: 0.88rem;
+}
+
+.message-body th,
+.message-body td {
+  border: 1px solid var(--border-main);
+  padding: 8px 10px;
+  text-align: left;
+  vertical-align: top;
+  white-space: nowrap;
+}
+
+.message-body th {
+  background: var(--accent-soft);
+  color: var(--accent-strong);
+  font-weight: 850;
+}
+
+.message-body tr:nth-child(even) td {
+  background: color-mix(in srgb, var(--bg-soft), transparent 38%);
+}
+
 .retry-btn {
   margin-top: 12px;
   padding: 7px 12px;
@@ -478,6 +507,10 @@
     height: 100%;
   }
 
+  .advisor-panel {
+    grid-template-rows: auto minmax(0, 1fr) auto auto;
+  }
+
   .advisor-panel,
   .map-side {
     border-radius: var(--radius-card);
@@ -501,7 +534,7 @@
 
   .toolbar-actions {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(auto-fit, minmax(104px, 1fr));
     gap: 6px;
   }
 
@@ -515,6 +548,7 @@
   .messages {
     gap: 12px;
     padding: 12px 8px;
+    scroll-padding-bottom: 112px;
   }
 
   .message {
@@ -547,20 +581,28 @@
   }
 
   .prompt-strip {
-    padding: 8px 8px 0;
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: minmax(220px, 78vw);
+    gap: 8px;
+    padding: 8px 8px 6px;
   }
 
   .example-chip {
+    width: 100%;
     min-height: 34px;
-    max-width: 86vw;
+    max-width: none;
     padding: 7px 10px;
     font-size: 0.76rem;
+    justify-content: flex-start;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 
   .input-form {
     grid-template-columns: minmax(0, 1fr) 64px;
     gap: 8px;
-    padding: 8px;
+    padding: 8px 8px max(10px, env(safe-area-inset-bottom));
   }
 
   .input-form textarea {
@@ -578,5 +620,14 @@
   .map-side {
     inset: var(--header-height) 0 0;
     border-radius: 0;
+  }
+
+  .message-body table {
+    font-size: 0.8rem;
+  }
+
+  .message-body th,
+  .message-body td {
+    padding: 7px 8px;
   }
 }

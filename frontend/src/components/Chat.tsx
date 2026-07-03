@@ -1,5 +1,6 @@
 import { FormEvent, useEffect, useMemo, useRef, useState } from "react";
 import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
 import "./Chat.css";
 import PropertyCard, { Property } from "./PropertyCard";
 import MapComponent from "./MapComponent";
@@ -52,10 +53,6 @@ function shouldShowPropertyCards(userPrompt: string, toolTrace?: ToolTraceEntry[
   const showAction = /\bshow\b/.test(prompt);
   const listingNoun = /\b(homes?|properties|listings?|options?|apartments?|flats?|villas?|communities|projects)\b/.test(prompt);
   const listingConstraint = /\b\d+\s*bhk\b|\bbhk\b|\bunder\b|\bbudget\b|\baffordable\b|\bluxury\b|\bready-to-move\b|\bunder construction\b|\bnear\b/.test(prompt);
-  const asksForNewInventory =
-    (searchAction && (listingNoun || listingConstraint)) ||
-    (showAction && listingNoun) ||
-    (listingNoun && listingConstraint);
   const asksForFollowUpAnalysis = [
     "emi",
     "mortgage",
@@ -74,7 +71,10 @@ function shouldShowPropertyCards(userPrompt: string, toolTrace?: ToolTraceEntry[
     "comparison",
   ].some((term) => prompt.includes(term));
 
-  return asksForNewInventory && (!asksForFollowUpAnalysis || listingConstraint);
+  const hasNewListingSignal = searchAction || showAction || listingNoun || listingConstraint;
+  const followUpOnly = asksForFollowUpAnalysis && !hasNewListingSignal;
+
+  return hasNewListingSignal && !followUpOnly;
 }
 
 export default function Chat() {
@@ -200,7 +200,11 @@ export default function Chat() {
               <div className="message-content">
                 <div className="message-label">{msg.role === "user" ? "You" : "Advisor"}</div>
                 <div className="message-body">
-                  {msg.role === "assistant" ? <ReactMarkdown>{msg.content}</ReactMarkdown> : <p>{msg.content}</p>}
+                  {msg.role === "assistant" ? (
+                    <ReactMarkdown remarkPlugins={[remarkGfm]}>{msg.content}</ReactMarkdown>
+                  ) : (
+                    <p>{msg.content}</p>
+                  )}
                   {msg.failedPrompt && (
                     <button className="retry-btn" type="button" onClick={() => sendMessage(msg.failedPrompt || "")}>
                       Retry

@@ -219,4 +219,22 @@
   .property-price-text {
     white-space: normal;
   }
+
+  .property-card-footer {
+    align-items: stretch;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .property-builder-text strong,
+  .property-builder-text span {
+    overflow: visible;
+    text-overflow: clip;
+    white-space: normal;
+  }
+
+  .btn-view-map-action {
+    width: 100%;
+    min-height: 42px;
+  }
 }

@@ -48,7 +48,7 @@ html {
 body {
   margin: 0;
   min-width: 320px;
-  height: 100vh;
+  height: 100svh;
   overflow: hidden;
   background:
     radial-gradient(circle at 18% 8%, rgba(201, 95, 75, 0.16), transparent 28rem),
@@ -69,9 +69,16 @@ button {
 
 .app {
   position: relative;
-  height: 100vh;
+  height: 100svh;
   overflow: hidden;
   isolation: isolate;
+}
+
+@supports (height: 100dvh) {
+  body,
+  .app {
+    height: 100dvh;
+  }
 }
 
 .ambient-grid {
@@ -193,10 +200,16 @@ main {
   display: flex;
   flex-direction: column;
   gap: 0;
-  height: calc(100vh - var(--header-height));
+  height: calc(100svh - var(--header-height));
   min-height: 0;
   padding: 14px clamp(12px, 3vw, 48px) max(14px, env(safe-area-inset-bottom));
   overflow: hidden;
+}
+
+@supports (height: 100dvh) {
+  main {
+    height: calc(100dvh - var(--header-height));
+  }
 }
 
 .home-view {
@@ -215,7 +228,8 @@ main {
   align-items: end;
   width: min(1440px, 100%);
   margin: 0 auto;
-  min-height: min(620px, calc(100vh - var(--header-height) - 48px));
+  flex: 0 0 auto;
+  min-height: min(620px, calc(100svh - var(--header-height) - 48px));
   padding: clamp(20px, 4vw, 42px);
   border: 1px solid var(--border-main);
   border-radius: var(--radius-card);
@@ -226,6 +240,12 @@ main {
   box-shadow: var(--shadow-soft);
   overflow: hidden;
   position: relative;
+}
+
+@supports (height: 100dvh) {
+  .hero-shell {
+    min-height: min(620px, calc(100dvh - var(--header-height) - 48px));
+  }
 }
 
 .hero-shell::after {
@@ -410,9 +430,20 @@ main {
     padding: 8px;
   }
 
+  .home-view {
+    justify-content: flex-start;
+  }
+
   .hero-shell {
-    min-height: calc(100vh - var(--header-height) - 16px);
-    padding: 18px 18px 54px;
+    min-height: calc(100svh - var(--header-height) - 16px);
+    padding: 18px;
+    overflow: visible;
+  }
+
+  @supports (height: 100dvh) {
+    .hero-shell {
+      min-height: calc(100dvh - var(--header-height) - 16px);
+    }
   }
 
   .hero-copy h1 {
@@ -432,9 +463,11 @@ main {
   }
 
   .home-footer {
-    left: 18px;
-    right: 18px;
-    bottom: 14px;
+    position: relative;
+    left: auto;
+    right: auto;
+    bottom: auto;
+    margin-top: 4px;
     font-size: 0.78rem;
   }
 
