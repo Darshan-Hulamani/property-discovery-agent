@@ -21,7 +21,7 @@ TOOL_FUNCTIONS = {
 FUNCTION_DECLARATIONS = [
     types.FunctionDeclaration(
         name="search_properties",
-        description="Search curated Indian property listings by city, budget, BHK, locality, type, and tags.",
+        description="Search and rank curated Indian property listings by city, budget, BHK, locality, type, and semantic preference tags. Returns explainable scores and score reasons.",
         parameters=types.Schema(
             type=types.Type.OBJECT,
             properties={
@@ -30,10 +30,11 @@ FUNCTION_DECLARATIONS = [
                 "min_bhk": types.Schema(type=types.Type.INTEGER, description="Minimum BHK count"),
                 "locality": types.Schema(type=types.Type.STRING, description="Locality or area name"),
                 "property_type": types.Schema(type=types.Type.STRING, description="apartment or villa"),
+                "possession": types.Schema(type=types.Type.STRING, description="Possession preference e.g. Ready to move or Under construction"),
                 "must_have_tags": types.Schema(
                     type=types.Type.ARRAY,
                     items=types.Schema(type=types.Type.STRING),
-                    description="Required tags e.g. metro_nearby, gated, schools_nearby",
+                    description="Required or preferred tags e.g. metro_nearby, gated, schools_nearby, it_hub_nearby, budget_friendly, premium",
                 ),
                 "limit": types.Schema(type=types.Type.INTEGER, description="Max results, default 10"),
             },
@@ -155,7 +156,7 @@ def _summarize_result(name: str, result: dict) -> str:
     if "error" in result:
         return f"{name}: {result['error']}"
     if name == "search_properties":
-        return f"{name}: found {result.get('count', 0)} properties"
+        return f"{name}: ranked {result.get('count', 0)} properties"
     if name == "estimate_commute":
         return f"{name}: {result.get('duration_minutes')} min, {result.get('distance_km')} km"
     if name == "compare_properties":

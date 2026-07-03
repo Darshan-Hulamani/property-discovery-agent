@@ -4,31 +4,25 @@
   box-sizing: border-box;
 }
 
-body {
-  margin: 0;
-  font-family: "DM Sans", system-ui, -apple-system, sans-serif;
-  background-color: var(--bg-app);
-  color: var(--text-main);
-  min-height: 100vh;
-}
-
 #root {
   min-height: 100vh;
 }
 
-button {
-  font-family: inherit;
-  cursor: pointer;
+img {
+  display: block;
+  max-width: 100%;
 }
 
+button,
+a,
 textarea {
-  font-family: inherit;
+  -webkit-tap-highlight-color: transparent;
 }
 
 code {
-  font-family: ui-monospace, "Cascadia Code", monospace;
-  font-size: 0.85em;
+  border-radius: 5px;
   background: rgba(120, 120, 120, 0.15);
-  padding: 0.1em 0.35em;
-  border-radius: 4px;
+  padding: 0.12em 0.35em;
+  font-family: ui-monospace, "Cascadia Code", "SFMono-Regular", monospace;
+  font-size: 0.86em;
 }

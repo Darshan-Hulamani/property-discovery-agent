@@ -60,7 +60,7 @@ def _resolve_coords(
             return match["lat"], match["lng"]
 
     if locality and city:
-        key = f"{locality}/{city}"
+        key = f"{city.strip()}/{locality.strip()}"
         neighbourhoods = load_neighbourhoods()
         if key in neighbourhoods:
             listings = load_listings()

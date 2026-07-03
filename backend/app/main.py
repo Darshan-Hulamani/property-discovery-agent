@@ -16,9 +16,15 @@ load_dotenv()
 
 app = FastAPI(title="Property Discovery Agent", version="1.0.0")
 
+allowed_origins = [
+    origin.strip()
+    for origin in os.getenv("CORS_ALLOWED_ORIGINS", "http://localhost:5173,http://127.0.0.1:5173").split(",")
+    if origin.strip()
+]
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=allowed_origins,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -29,7 +35,7 @@ FRONTEND_DIST = Path(__file__).resolve().parent.parent.parent / "frontend" / "di
 
 @app.get("/api/health")
 def health():
-    return {"status": "ok", "model": os.getenv("GEMINI_MODEL", "gemini-3.5-flash")}
+    return {"status": "ok", "model": os.getenv("GEMINI_MODEL", "gemini-2.5-flash")}
 
 
 @app.post("/api/chat", response_model=ChatResponse)
@@ -56,6 +62,9 @@ def reset(session_id: str = "default"):
 
 if FRONTEND_DIST.exists():
     app.mount("/assets", StaticFiles(directory=FRONTEND_DIST / "assets"), name="assets")
+    images_dir = FRONTEND_DIST / "images"
+    if images_dir.exists():
+        app.mount("/images", StaticFiles(directory=images_dir), name="images")
 
     @app.get("/{full_path:path}")
     def serve_spa(full_path: str):

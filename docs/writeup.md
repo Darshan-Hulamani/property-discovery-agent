@@ -1,77 +1,147 @@
-# Property Discovery Agent — Approach & Write-up
+# Property Discovery Agent - Approach & Write-up
 
-**Author:** [Darshan Hulamani](https://github.com/Darshan-Hulamani/).
+**Author:** [Darshan Hulamani](https://github.com/Darshan-Hulamani/)
 
-**Assignment:** Digitomics Agentic AI Engineering — Autonomous Property-Discovery Agent  
+**Assignment:** Digitomics Agentic AI Engineering - Autonomous Property-Discovery Agent
+
 **Date:** July 2026
 
-## 1. Problem & approach
+## 1. Project Analysis
 
-Home buyers in India spend months manually comparing listings across MagicBricks, 99acres, Housing.com, plus school ratings, commute times, and neighbourhood safety. This agent automates that multi-source reasoning in a single conversational interface.
+The project is a full-stack AI property discovery product with a React/Vite frontend, FastAPI backend, Gemini tool-calling agent, curated Indian listings, neighbourhood profiles, live OSRM commute routing, and Leaflet maps.
 
-**Approach:** A Gemini-powered autonomous agent with five function-calling tools. The LLM decides which tools to invoke based on the user's natural-language preferences — not a fixed pipeline. After gathering evidence, it ranks candidates and explains each pick against the buyer's stated priorities.
+What is good:
+- Clear separation between UI, API, agent loop, tools, and data.
+- Tool trace makes autonomous agent behaviour visible for evaluation.
+- Curated listings include real property-like fields, coordinates, builders, possession status, price, tags, and neighbourhood context.
+- Live commute routing adds one genuinely dynamic signal instead of relying entirely on mock data.
+- The frontend now feels closer to a premium SaaS workspace, with map drawer, shortlist cards, loading states, dark mode, and mobile-first responsiveness.
 
-## 2. Tools & data sources
+What was weak:
+- The original UI looked assignment-like and broke on smaller viewports.
+- Search was mostly filtering, so the agent could not explain ranking in a deterministic way.
+- Locality matching was too loose and could bury exact-area results under unrelated high-scoring alternatives.
+- Static production serving did not expose `/images`, so built property images could break behind FastAPI.
+- Documentation did not reflect the weighted ranking engine.
 
-| Tool | Purpose | Live or mock |
-|------|---------|--------------|
-| `search_properties` | Filter listings by city, budget, BHK, locality, tags | Mock (30 curated Indian listings) |
-| `get_property_details` | Deep dive on one property | Mock |
-| `estimate_commute` | Driving time to workplace/landmark | **Live OSRM** + Nominatim geocoding |
-| `get_neighbourhood_profile` | Schools, safety, metro, amenities | Mock (curated per-locality profiles) |
-| `compare_properties` | Side-by-side finalist comparison | Derived from mock data |
+What should remain untouched:
+- The overall FastAPI + React architecture is appropriate for a portfolio app.
+- The tool registry pattern is simple and extensible.
+- OSRM is a pragmatic live-data integration for a demo without paid map APIs.
 
-**Why mock listings?** No reliable free public API exists for Indian property portals. Scraping would be fragile and likely violate terms of service. The assignment explicitly values honesty: a smaller, real, well-reasoned agent beats an over-scoped demo that doesn't run.
+What should be rewritten later:
+- In-memory sessions should become persistent storage.
+- Curated JSON should become a seed dataset loaded into PostgreSQL.
+- Agent evals should be formalized instead of manually checking prompt scenarios.
 
-**Why OSRM for commute?** It's free, requires no API key, and provides real routing geometry. When a buyer mentions "office in Electronic City," the agent calls `estimate_commute` with live coordinates.
+## 2. Current Architecture
 
-## 3. Ranking methodology
+```text
+React/Vite UI
+  -> /api/chat
+FastAPI app
+  -> Gemini agent loop
+  -> Tool registry
+  -> search/ranking/details/neighbourhood/commute/compare/EMI tools
+  -> curated JSON data + live OSRM routing
+  -> markdown answer + structured property cards + tool trace
+```
 
-Ranking is **LLM reasoning over tool outputs**, not a hidden Python scorer. The system prompt instructs Gemini to:
+Session state is currently in memory per `session_id`. Buyer preferences are also tracked per session through the profile memory tool.
 
-1. Weight budget fit, locality match, commute (when computed), school/safety scores, and property attributes
-2. Produce a top 3–5 shortlist with bullet justifications tied to user priorities
-3. Include a "Trade-offs" section for honest compromise analysis
-4. Disclose data sources in "Data notes"
+## 3. Agent Workflow
 
-On follow-ups ("what about commute to Electronic City?" or "cheaper options in Marathahalli?"), the agent calls only the relevant tools and updates its recommendations.
+The system prompt now frames the agent as HomeScope AI, a premium Indian real estate consultant. For every turn it should detect intent, update buyer memory, clarify only when core information is missing, select relevant tools, reason from returned data, and produce a concise shortlist with trade-offs and one next question.
 
-## 4. Architecture
+The agent is instructed to:
+- Save city, budget, BHK, locality, commute destination, and must-have features immediately.
+- Search first, then call details, neighbourhood, commute, compare, or EMI tools as needed.
+- Never invent property IDs, coordinates, commute times, scores, builders, or amenities.
+- Disclose that listings and neighbourhood profiles are curated demo data.
 
-React chat UI → FastAPI `/api/chat` → Gemini agent loop → tool registry → data sources → ranked markdown response.
+## 4. Ranking Methodology
 
-Session state is in-memory (per `session_id`). Tool trace is optionally exposed in the UI to demonstrate autonomous tool use during evaluation.
+Search results are now ranked by a deterministic weighted scoring engine:
 
-## 5. Trade-offs
+| Signal | Weight |
+|--------|--------|
+| Budget match | 22% |
+| BHK match | 10% |
+| Locality match | 12% |
+| School score | 12% |
+| Safety score | 12% |
+| Metro access | 10% |
+| Preference tags | 12% |
+| Possession | 4% |
+| Investment potential | 6% |
 
-| Decision | Trade-off |
-|----------|-----------|
-| Mock listings | Fast, reliable demo; not real marketplace data |
-| Gemini Flash | Free tier, fast; rate limits on heavy use |
-| In-memory sessions | Simple deploy; no persistence across restarts |
-| Single Render service | One deploy artifact; frontend rebuilt on each deploy |
-| OSRM public instance | Free but shared; may rate-limit under load |
+Each result includes `score`, `score_breakdown`, and `score_reasons`. The LLM uses these outputs to explain why a property fits instead of inventing hidden reasoning.
 
-## 6. What I'd improve with more time
+Locality is treated as a primary search area. If the buyer asks for Whitefield, exact Whitefield results are shown first; fallback areas can appear only after the primary matches.
 
-1. **Real listing ingestion** — Partner API or scheduled ETL from licensed data providers
-2. **Persistent sessions** — Redis or PostgreSQL for conversation history
-3. **Google Maps Distance Matrix** — More accurate Bangalore traffic-aware commute
-4. **Structured output** — JSON schema for shortlist cards in the React UI (not just markdown)
-5. **Evaluation suite** — Automated tests for tool selection patterns and ranking consistency
-6. **Multi-city expansion** — More listings and neighbourhood profiles for tier-2 cities
+## 5. UI/UX Improvements
 
-## 7. Demo scenarios
+The interface has been redesigned as a premium advisor workspace:
+- Sticky glass-style header with theme toggle.
+- Product hero with key metrics.
+- Advisor panel with chat, examples, loading skeletons, and tool trace.
+- Modern property cards with images, scores, reasons, amenities, builder, possession, and map action.
+- Responsive map drawer with Leaflet markers and score popups.
+- Mobile layout with sticky input and full-screen map behaviour.
 
-1. *Initial search:* "3BHK under ₹1.2 Cr in Whitefield, good schools, metro nearby"  
-   → Agent calls `search_properties`, `get_neighbourhood_profile`, returns ranked shortlist.
+## 6. Data & Tools
 
-2. *Commute follow-up:* "Office is in Electronic City"  
-   → Agent calls `estimate_commute` for top candidates, re-ranks with commute context.
+| Tool | Purpose | Data source |
+|------|---------|-------------|
+| `search_properties` | Filter and rank listings | Curated dataset |
+| `get_property_details` | Deep enriched property view | Curated dataset + ranking |
+| `estimate_commute` | Driving commute to landmark/workplace | Live OSRM + Nominatim fallback |
+| `get_neighbourhood_profile` | Safety, schools, metro, amenities | Curated profiles |
+| `compare_properties` | Side-by-side finalist comparison | Curated dataset |
+| `calculate_mortgage` | EMI and affordability estimate | Formula-based |
+| `update_buyer_profile` | Session memory for buyer constraints | In-memory |
 
-3. *Refinement:* "Cheaper 2BHK in Marathahalli under ₹80 lakh"  
-   → Agent calls `search_properties` with updated filters, compares with prior picks.
+## 7. Model Recommendation
+
+Gemini is acceptable for the current portfolio version because it has good function-calling support, low friction setup, and fast latency. For a production SaaS version, the best long-term approach would be provider abstraction with evaluation-based model selection.
+
+Recommended path:
+- Keep Gemini as the default demo model.
+- Add a model adapter interface so OpenAI, Claude, or Gemini can be swapped without touching tools.
+- Use automated evals to compare function-call accuracy, hallucination rate, latency, and cost.
+- Consider OpenAI or Claude for stronger reasoning and tool reliability if the project becomes a production-grade product.
+
+## 8. Additional Add-ons & Recommendations
+
+- Add PostgreSQL with PostGIS for geospatial search and locality radius queries.
+- Add Redis for session memory, cached commute results, and rate limiting.
+- Add property favorites, compare board, shareable shortlist links, and PDF export.
+- Add affordability, EMI, down-payment, stamp-duty, and maintenance-cost calculators.
+- Add neighbourhood scorecards for walkability, schools, hospitals, safety, metro, traffic, and rental demand.
+- Add market trends, price-per-sqft history, appreciation forecast, and rental yield estimates.
+- Add structured JSON agent outputs to reduce markdown parsing and make UI cards fully reliable.
+- Add automated agent evals for common buyer journeys and tool-selection correctness.
+- Add Playwright visual tests for desktop and mobile layouts.
+- Add error boundaries, retry states, API timeout handling, and empty-state guidance.
+- Add authentication so users can save searches and shortlists.
+- Add observability with request IDs, tool latency, model latency, failure rates, and prompt/version tracking.
+- Add input moderation and guardrails around financial advice, legal claims, and unsupported live listing claims.
+- Add deployment hardening: environment validation, health checks, CI builds, linting, and smoke tests.
+
+## 9. Demo Scenarios
+
+1. "3BHK under Rs 1.2 Cr in Whitefield with metro and good schools."
+   The agent updates memory, calls `search_properties`, and returns a ranked shortlist with exact Whitefield results first.
+
+2. "I work in Electronic City. Rank these by commute and family safety."
+   The agent calls `estimate_commute` for relevant properties and explains commute trade-offs.
+
+3. "Find affordable 2BHK homes for rental investment near an IT corridor."
+   The agent maps the intent to budget-friendly, IT corridor, metro, and rental-demand signals.
+
+4. "Show under-construction options only."
+   The search tool filters by possession and returns only matching inventory.
 
 ---
 
-*Listings and neighbourhood data: curated demo dataset. Commute: live OSRM routing. Agent: live Google Gemini API.*
+Listings and neighbourhood data are curated demo data. Commute estimates use live OSRM routing when computed. Agent responses are generated through the configured Gemini model.

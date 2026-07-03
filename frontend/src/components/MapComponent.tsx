@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { MapContainer, TileLayer, Marker, Popup, useMap } from "react-leaflet";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
@@ -94,7 +94,8 @@ export default function MapComponent({ properties, activePropertyId, isOpen, onM
               <div className="map-popup-content">
                 <strong>{prop.title}</strong>
                 <p>{prop.price_display}</p>
-                <p>{prop.locality}</p>
+                <p>{prop.locality}, {prop.city}</p>
+                {prop.score !== undefined && <span>{prop.score}/100 match</span>}
               </div>
             </Popup>
           </Marker>

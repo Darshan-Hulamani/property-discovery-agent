@@ -15,5 +15,5 @@ class ToolTraceEntry(BaseModel):
 class ChatResponse(BaseModel):
     reply: str
     session_id: str
-    tool_trace: list[ToolTraceEntry] = []
-    properties: list[dict] = []
+    tool_trace: list[ToolTraceEntry] = Field(default_factory=list)
+    properties: list[dict] = Field(default_factory=list)
