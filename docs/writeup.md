@@ -1,6 +1,6 @@
 # Property Discovery Agent — Approach & Write-up
 
-**Author:** [Your Name]  
+**Author:** [Darshan Hulamani](https://github.com/Darshan-Hulamani/).
 **Assignment:** Digitomics Agentic AI Engineering — Autonomous Property-Discovery Agent  
 **Date:** July 2026
 
