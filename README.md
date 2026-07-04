@@ -72,7 +72,7 @@ A detailed architecture diagram and workflow can be found in **docs/architecture
 - Node.js **18+**
 - Google Gemini API Key
 
-Generate a free API key from:
+Generate a free API key from Google AI Studio:
 
 [https://aistudio.google.com/apikey](https://aistudio.google.com/apikey)
 
@@ -83,7 +83,7 @@ Generate a free API key from:
 ## 1️⃣ Clone the Repository
 
 ```bash
-git clone https://github.com/<your-username>/property-discovery-agent.git
+git clone https://github.com/Darshan-Hulamani/property-discovery-agent.git
 cd property-discovery-agent
 ```
 
@@ -210,7 +210,11 @@ Compare the top three recommended properties.
 
 ---
 
-# ☁️ Deployment (Render)
+# ☁️ Deployment
+
+The live application is deployed on **Vercel**.
+
+For users who wish to self-host the project, deployment instructions for **Render** are provided below.
 
 1. Push the repository to GitHub.
 2. Create a new **Render Web Service**.
